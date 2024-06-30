@@ -1,3 +1,6 @@
+import '../../../../core/utils/const.dart';
+import '../../../Order/presentation/view/order_view.dart';
+
 class DashboardModel {
   late final String image;
   late final String title;
@@ -38,7 +41,7 @@ class DashboardModel {
       title: 'View Order',
       image: 'assets/images/dashboard/order.png',
       function: (context) {
-      //  navigateTo(context, const OrderView());
+        navigateTo(context, const OrderView());
       },
     ),
   ];

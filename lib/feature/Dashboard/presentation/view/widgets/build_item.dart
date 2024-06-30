@@ -24,7 +24,7 @@ class BuildItem extends StatelessWidget {
                 height: 10,
               ),
               Text(title,
-                style: AppSStyles.style18,
+                style: AppStyles.style18,
               )
             ],
           ),

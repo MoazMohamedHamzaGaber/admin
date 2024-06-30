@@ -1,51 +1,52 @@
-// import 'package:admin/feature/Dashboard/manage/cubit/cubit.dart';
 // import 'package:awesome_dialog/awesome_dialog.dart';
-// import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+
+import '../../feature/Dashboard/presentation/manage/cubit/cubit.dart';
 // import 'package:flutter/services.dart';
-// import 'package:shimmer/shimmer.dart';
+ import 'package:shimmer/shimmer.dart';
 //
-// AppBar appBar({
-//   context,
-//   String? text,
-//   IconData? iconData,
-//   bool centerTitle = false,
-//   required Function function,
-// }) =>
-//     AppBar(
-//       centerTitle: centerTitle,
-//       leading: IconButton(
-//         onPressed: () {
-//           function();
-//         },
-//         icon: Icon(
-//           Icons.arrow_back,
-//           color:
-//           DashboardCubit.get(context).isDarkTheme ? Colors.white : Colors.black,
-//         ),
-//       ),
-//       title: Shimmer.fromColors(
-//         period: const Duration(seconds: 15),
-//         baseColor: Colors.purple,
-//         highlightColor: Colors.red,
-//         child: Text(
-//           text!,
-//           textAlign: TextAlign.center,
-//           style: const TextStyle(
-//             fontSize: 20.0,
-//             fontWeight: FontWeight.bold,
-//           ),
-//         ),
-//       ),
-//       actions: [
-//         IconButton(
-//           onPressed: () {},
-//           icon: Icon(
-//             iconData,
-//             color: Colors.red,
-//           ),
-//         ),
-//       ],
-//     );
+AppBar appBar({
+  context,
+  String? text,
+  IconData? iconData,
+  bool centerTitle = false,
+  required Function function,
+}) =>
+    AppBar(
+      centerTitle: centerTitle,
+      leading: IconButton(
+        onPressed: () {
+          function();
+        },
+        icon: Icon(
+          Icons.arrow_back,
+          color:
+          DashboardCubit.get(context).isDarkTheme ? Colors.white : Colors.black,
+        ),
+      ),
+      title: Shimmer.fromColors(
+        period: const Duration(seconds: 15),
+        baseColor: Colors.purple,
+        highlightColor: Colors.red,
+        child: Text(
+          text!,
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+      actions: [
+        IconButton(
+          onPressed: () {},
+          icon: Icon(
+            iconData,
+            color: Colors.red,
+          ),
+        ),
+      ],
+    );
 //
 // Widget buildTextField({
 //   required context,
