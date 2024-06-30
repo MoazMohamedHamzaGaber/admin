@@ -1,13 +1,13 @@
 import 'package:admin/core/utils/shared_preference.dart';
-import 'package:admin/feature/Home/manage/cubit/states.dart';
+import 'package:admin/feature/Dashboard/manage/cubit/states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ThemeCubit extends Cubit<ThemeStates> {
-  ThemeCubit(bool initialTheme) : super(InitialThemeStates()) {
+class DashboardCubit extends Cubit<DashboardStates> {
+  DashboardCubit(bool initialTheme) : super(InitialDashboardStates()) {
     isDarkTheme = initialTheme;
   }
 
-  static ThemeCubit get(context) => BlocProvider.of(context);
+  static DashboardCubit get(context) => BlocProvider.of(context);
 
   bool isDarkTheme = false;
 
