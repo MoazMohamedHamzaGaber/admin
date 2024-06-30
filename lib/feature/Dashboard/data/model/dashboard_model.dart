@@ -1,4 +1,5 @@
 import '../../../../core/utils/const.dart';
+import '../../../Add_Update_product/presentation/view/add_update_view.dart';
 import '../../../Order/presentation/view/order_view.dart';
 
 class DashboardModel {
@@ -17,17 +18,9 @@ class DashboardModel {
       title: 'Add a new product',
       image: 'assets/images/dashboard/cloud.png',
       function: (context) {
-        // navigateTo(
-        //     context,
-        //     AddOrUpdateProductView(
-        //       isUpdate: false,
-        //       model: ProductModel(
-        //         productPrice: priceController.text,
-        //         productTitle: titleController.text,
-        //         productDescription: descriptionController.text,
-        //         productQuantity: quantityController.text,
-        //       ),
-        //     ));
+        navigateTo(
+            context,
+            const AddUpdateView());
       },
     ),
     DashboardModel(

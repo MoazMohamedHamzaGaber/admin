@@ -19,11 +19,11 @@ Future navigateTo(context,Widget)
 //   return Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Widget),(route) => false,);
 // }
 //
-// var titleController=TextEditingController();
-// var priceController=TextEditingController();
-// var quantityController=TextEditingController();
-// var descriptionController=TextEditingController();
-//
+var titleController=TextEditingController();
+var priceController=TextEditingController();
+var quantityController=TextEditingController();
+var descriptionController=TextEditingController();
+
 // String uId='';
 //
 //
