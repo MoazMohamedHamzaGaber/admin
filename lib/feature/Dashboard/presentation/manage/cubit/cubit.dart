@@ -1,5 +1,5 @@
 import 'package:admin/core/utils/shared_preference.dart';
-import 'package:admin/feature/Dashboard/manage/cubit/states.dart';
+import 'package:admin/feature/Dashboard/presentation/manage/cubit/states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DashboardCubit extends Cubit<DashboardStates> {

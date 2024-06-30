@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
-import '../../../manage/cubit/cubit.dart';
-import '../../../manage/cubit/states.dart';
+import '../../manage/cubit/cubit.dart';
+import '../../manage/cubit/states.dart';
 
 class BuildAppBar extends StatelessWidget implements PreferredSizeWidget{
   const BuildAppBar({super.key, required this.image,required this.title});

@@ -1,12 +1,12 @@
 import 'package:admin/core/utils/shared_preference.dart';
 import 'package:admin/core/utils/theme_data.dart';
-import 'package:admin/feature/Dashboard/manage/cubit/cubit.dart';
-import 'package:admin/feature/Dashboard/manage/cubit/states.dart';
-import 'package:admin/feature/Dashboard/presentation/view/home_view.dart';
+import 'package:admin/feature/Dashboard/presentation/view/dashboard_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'feature/Dashboard/presentation/manage/cubit/cubit.dart';
+import 'feature/Dashboard/presentation/manage/cubit/states.dart';
 import 'firebase_options.dart';
 
 void main() async{
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             title: 'Shopsmart Admin',
             theme: Styles.themeData(isDarkTheme: DashboardCubit.get(context).isDarkTheme, context: context),
-            home: const HomeView(),
+            home: const DashBoardView(),
           );
         },
       ),
