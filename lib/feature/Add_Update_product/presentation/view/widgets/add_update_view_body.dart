@@ -1,5 +1,6 @@
 import 'package:admin/core/loading/loading_manager.dart';
 import 'package:admin/feature/Add_Update_product/presentation/view/widgets/text_field_section.dart';
+import 'package:admin/feature/Dashboard/presentation/view/dashboard_view.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,6 +30,7 @@ class _AddUpdateViewBodyState extends State<AddUpdateViewBody> {
     return BlocConsumer<ProductsCubit, ProductsStates>(
       listener: (BuildContext context, state) {
         if (state is AddProductsSuccessStates) {
+          navigateTo(context, const DashBoardView());
           awesomeDialog(context, 'Product added successfully!',DialogType.success);
         }
         if(state is AddProductsErrorStates){
