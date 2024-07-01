@@ -1,0 +1,23 @@
+import 'dart:io';
+
+import 'package:admin/core/error/failure.dart';
+import 'package:dartz/dartz.dart';
+import 'package:image_picker/image_picker.dart';
+
+abstract class AddProductsRepo{
+  File? profileImageFile;
+  Future<Either<FirebaseFailure,void>> addProducts({
+    required String productId,
+    String? productImage,
+    required String productPrice,
+    required String productTitle,
+    required String productDescription,
+    required String productQuantity,
+    required String productCategory,
+    required context,
+});
+
+  Future<Either<FirebaseFailure,void>> getProfileImage({
+    required ImageSource imageSource,
+});
+}

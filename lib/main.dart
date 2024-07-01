@@ -1,12 +1,14 @@
 import 'package:admin/core/utils/shared_preference.dart';
 import 'package:admin/core/utils/theme_data.dart';
-import 'package:admin/feature/Home/manage/cubit/cubit.dart';
-import 'package:admin/feature/Home/manage/cubit/states.dart';
-import 'package:admin/feature/Home/presentation/view/home_view.dart';
+import 'package:admin/feature/Add_Update_product/data/repository/add_products_repo_impl.dart';
+import 'package:admin/feature/Add_Update_product/presentation/manage/cubit/cubit.dart';
+import 'package:admin/feature/Dashboard/presentation/view/dashboard_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'feature/Dashboard/presentation/manage/cubit/cubit.dart';
+import 'feature/Dashboard/presentation/manage/cubit/states.dart';
 import 'firebase_options.dart';
 
 void main() async{
@@ -29,15 +31,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return  MultiBlocProvider(
       providers: [
-        BlocProvider(create: (BuildContext context)=>ThemeCubit(isDarkTheme),),
+        BlocProvider(create: (BuildContext context)=>DashboardCubit(isDarkTheme),),
+        BlocProvider(create: (BuildContext context)=>ProductsCubit(AddProductsRepoImpl()),),
       ],
-      child: BlocBuilder<ThemeCubit,ThemeStates>(
+      child: BlocBuilder<DashboardCubit,DashboardStates>(
         builder: (BuildContext context, state) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Shopsmart Admin',
-            theme: Styles.themeData(isDarkTheme: ThemeCubit.get(context).isDarkTheme, context: context),
-            home: const HomeView(),
+            theme: Styles.themeData(isDarkTheme: DashboardCubit.get(context).isDarkTheme, context: context),
+            home: const DashBoardView(),
           );
         },
       ),

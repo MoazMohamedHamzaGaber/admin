@@ -38,6 +38,15 @@ dependencies:
   firebase_core: ^2.24.0
   flutter_bloc: ^8.1.6
   shared_preferences:
+  shimmer: ^3.0.0
+  cached_network_image: ^3.3.1
+  awesome_dialog: ^3.2.1
+  cloud_firestore: ^4.17.5
+  firebase_storage: ^11.7.7
+  dartz: ^0.10.1
+  image_picker: ^1.1.2
+  uuid: ^4.4.0
+  loading_animation_widget: ^1.2.1
 
 dev_dependencies:
   flutter_test:
@@ -91,3 +100,9 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  assets:
+    - assets/
+    - assets/images/
+    - assets/images/dashboard/
+    - assets/images/categories/
+
