@@ -13,12 +13,14 @@ class AllProductsCubit extends Cubit<AllProductsStates>{
   void getProducts()async{
     emit(AllProductsLoadingStates());
 
-    var result=await getProductsRepos.fetchProducts();
-
-    result.fold((failure){
-      emit(AllProductsErrorStates(errMessage: failure.errMessage));
-    }, (products) {
-      emit(AllProductsSuccessStates(products: products));
+   await getProductsRepos.fetchProducts().listen((result){
+      result.fold((failure){
+        emit(AllProductsErrorStates(errMessage: failure.errMessage));
+      }, (products) {
+        emit(AllProductsSuccessStates(products: products));
+      });
     });
+
+    
   }
 }

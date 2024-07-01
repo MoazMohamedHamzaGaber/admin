@@ -6,16 +6,16 @@ import 'package:dartz/dartz.dart';
 
 class GetProductsReposImpl implements GetProductsRepos {
   @override
-  Future<Either<Failure, List<ProductModel>>> fetchProducts() async {
-    try {
-      var querySnapshot =
-      await FirebaseFirestore.instance.collection('products').get();
-      List<ProductModel> products = querySnapshot.docs
-          .map((doc) => ProductModel.fromJson(doc.data()))
-          .toList();
-      return Right(products);
-    } catch (e) {
-      return Left(FirebaseFailure(e.toString()));
-    }
+  Stream<Either<Failure, List<ProductModel>>> fetchProducts() {
+    return FirebaseFirestore.instance.collection('products').snapshots().map((snapshot) {
+      try {
+        List<ProductModel> products = snapshot.docs
+            .map((doc) => ProductModel.fromJson(doc.data() as Map<String, dynamic>))
+            .toList();
+        return Right(products);
+      } catch (e) {
+        return Left(FirebaseFailure(e.toString()));
+      }
+    });
   }
 }

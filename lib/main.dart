@@ -34,7 +34,6 @@ class MyApp extends StatelessWidget {
     return  MultiBlocProvider(
       providers: [
         BlocProvider(create: (BuildContext context)=>DashboardCubit(isDarkTheme),),
-        BlocProvider(create: (BuildContext context)=>ProductsCubit(AddProductsRepoImpl()),),
         BlocProvider(create: (BuildContext context)=>AllProductsCubit(GetProductsReposImpl())..getProducts(),),
       ],
       child: BlocBuilder<DashboardCubit,DashboardStates>(

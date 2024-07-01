@@ -8,6 +8,7 @@ import 'package:uuid/uuid.dart';
 
 import '../../../../../core/utils/components.dart';
 import '../../../../../core/utils/const.dart';
+import '../../../data/repository/add_products_repo_impl.dart';
 import '../../manage/cubit/cubit.dart';
 import '../../manage/cubit/states.dart';
 import 'button_section.dart';
@@ -27,58 +28,61 @@ class _AddUpdateViewBodyState extends State<AddUpdateViewBody> {
   final productID = const Uuid().v4();
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ProductsCubit, ProductsStates>(
-      listener: (BuildContext context, state) {
-        if (state is AddProductsSuccessStates) {
-          navigateTo(context, const DashBoardView());
-          awesomeDialog(context, 'Product added successfully!',DialogType.success);
-        }
-        if(state is AddProductsErrorStates){
-          awesomeDialog(context, state.error,DialogType.error);
-        }
-      },
-      builder: (BuildContext context, Object? state) {
-        var cubit = ProductsCubit.get(context);
-        return LoadingManager(
-          isLoading: state is AddProductsLoadingStates &&
-              cubit.addProductsRepo.profileImageFile != null,
-          child: Form(
-            key: formKey,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: CustomScrollView(
-                physics: const BouncingScrollPhysics(),
-                slivers: [
-                  SliverFillRemaining(
-                    hasScrollBody: false,
-                    child: Column(
-                      children: [
-                         const ImageCustom(),
-                        const SizedBox(
-                          height: 25,
-                        ),
-                        const DropdownButtonSection(),
-                        const SizedBox(
-                          height: 25,
-                        ),
-                        const TextFieldSection(),
-                        const Spacer(),
-                        ButtonSection(
-                           cubit: cubit, productID: productID,
-                          fromKey: formKey,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                      ],
+    return BlocProvider(
+      create: (BuildContext context)=>ProductsCubit(AddProductsRepoImpl()),
+      child: BlocConsumer<ProductsCubit, ProductsStates>(
+        listener: (BuildContext context, state) {
+          if (state is AddProductsSuccessStates) {
+            navigateTo(context, const DashBoardView());
+            awesomeDialog(context, 'Product added successfully!',DialogType.success);
+          }
+          if(state is AddProductsErrorStates){
+            awesomeDialog(context, state.error,DialogType.error);
+          }
+        },
+        builder: (BuildContext context, Object? state) {
+          var cubit = ProductsCubit.get(context);
+          return LoadingManager(
+            isLoading: state is AddProductsLoadingStates &&
+                cubit.addProductsRepo.profileImageFile != null,
+            child: Form(
+              key: formKey,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: CustomScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  slivers: [
+                    SliverFillRemaining(
+                      hasScrollBody: false,
+                      child: Column(
+                        children: [
+                           const ImageCustom(),
+                          const SizedBox(
+                            height: 25,
+                          ),
+                          const DropdownButtonSection(),
+                          const SizedBox(
+                            height: 25,
+                          ),
+                          const TextFieldSection(),
+                          const Spacer(),
+                          ButtonSection(
+                             cubit: cubit, productID: productID,
+                            fromKey: formKey,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }
