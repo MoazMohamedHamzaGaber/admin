@@ -1,4 +1,5 @@
 import 'package:admin/core/utils/styles.dart';
+import 'package:admin/feature/Add_Update_product/data/model/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -6,8 +7,10 @@ import '../../../../../core/utils/components.dart';
 import '../../../../../core/utils/const.dart';
 
 class TextFieldSection extends StatelessWidget {
-  const TextFieldSection({super.key});
+  const TextFieldSection({super.key, required this.model, required this.isUpdate});
 
+  final ProductModel model;
+  final bool isUpdate;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +19,7 @@ class TextFieldSection extends StatelessWidget {
         buildTextField(
           context: context,
           controller: titleController,
-          title:'Product Title',
+          title:isUpdate? model.productTitle:'Product Title',
           keyboardType: TextInputType.multiline,
           maxLength: 80,
           validate: 'Please enter a valid title',
@@ -31,7 +34,7 @@ class TextFieldSection extends StatelessWidget {
               child: buildTextField(
                   context: context,
                   controller: priceController,
-                  title: 'Price',
+                  title:isUpdate? model.productPrice: 'Price',
                   keyboardType: TextInputType.number,
                   validate: 'Price is missing',
                   inputFormatters: [
@@ -50,7 +53,7 @@ class TextFieldSection extends StatelessWidget {
               child: buildTextField(
                 context: context,
                 controller: quantityController,
-                title: 'QTY',
+                title:isUpdate? model.productQuantity: 'QTY',
                 keyboardType: TextInputType.number,
                 inputFormatters:  [
                   FilteringTextInputFormatter.digitsOnly,
@@ -63,7 +66,7 @@ class TextFieldSection extends StatelessWidget {
         buildTextField(
           context: context,
           controller: descriptionController,
-          title: 'Product Description',
+          title:isUpdate? model.productDescription: 'Product Description',
           keyboardType: TextInputType.multiline,
           maxLength: 1000,
           //minLines: 3,

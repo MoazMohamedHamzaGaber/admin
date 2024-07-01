@@ -8,6 +8,7 @@ import 'package:uuid/uuid.dart';
 
 import '../../../../../core/utils/components.dart';
 import '../../../../../core/utils/const.dart';
+import '../../../data/model/product_model.dart';
 import '../../../data/repository/add_products_repo_impl.dart';
 import '../../manage/cubit/cubit.dart';
 import '../../manage/cubit/states.dart';
@@ -16,7 +17,11 @@ import 'dropdown_button_section.dart';
 import 'image_custom.dart';
 
 class AddUpdateViewBody extends StatefulWidget {
-  const AddUpdateViewBody({super.key});
+  const AddUpdateViewBody(
+      {super.key, required this.isUpdate, required this.model});
+
+  final bool isUpdate;
+  final ProductModel model;
 
   @override
   State<AddUpdateViewBody> createState() => _AddUpdateViewBodyState();
@@ -26,18 +31,20 @@ class _AddUpdateViewBodyState extends State<AddUpdateViewBody> {
   var formKey = GlobalKey<FormState>();
 
   final productID = const Uuid().v4();
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context)=>ProductsCubit(AddProductsRepoImpl()),
+      create: (BuildContext context) => ProductsCubit(AddProductsRepoImpl()),
       child: BlocConsumer<ProductsCubit, ProductsStates>(
         listener: (BuildContext context, state) {
           if (state is AddProductsSuccessStates) {
             navigateTo(context, const DashBoardView());
-            awesomeDialog(context, 'Product added successfully!',DialogType.success);
+            awesomeDialog(
+                context, 'Product added successfully!', DialogType.success);
           }
-          if(state is AddProductsErrorStates){
-            awesomeDialog(context, state.error,DialogType.error);
+          if (state is AddProductsErrorStates) {
+            awesomeDialog(context, state.error, DialogType.error);
           }
         },
         builder: (BuildContext context, Object? state) {
@@ -56,19 +63,30 @@ class _AddUpdateViewBodyState extends State<AddUpdateViewBody> {
                       hasScrollBody: false,
                       child: Column(
                         children: [
-                           const ImageCustom(),
+                           ImageCustom(
+                             isUpdate: widget.isUpdate,
+                             model: widget.model,
+                           ),
                           const SizedBox(
                             height: 25,
                           ),
-                          const DropdownButtonSection(),
+                          DropdownButtonSection(
+                            isUpdate: widget.isUpdate,
+                            model: widget.model,
+                          ),
                           const SizedBox(
                             height: 25,
                           ),
-                          const TextFieldSection(),
+                          TextFieldSection(
+                            isUpdate: widget.isUpdate,
+                            model: widget.model,
+                          ),
                           const Spacer(),
                           ButtonSection(
-                             cubit: cubit, productID: productID,
+                            cubit: cubit,
+                            productID: productID,
                             fromKey: formKey,
+                            isUpdate: widget.isUpdate,
                           ),
                           const SizedBox(
                             height: 10,

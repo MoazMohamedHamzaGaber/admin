@@ -1,8 +1,10 @@
 import 'package:admin/core/loading/image_loading.dart';
 import 'package:admin/feature/Add_Update_product/data/model/product_model.dart';
+import 'package:admin/feature/Add_Update_product/presentation/view/add_update_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../core/utils/const.dart';
 import '../../../../Dashboard/presentation/manage/cubit/cubit.dart';
 
 class BuildItemSearch extends StatelessWidget {
@@ -15,7 +17,7 @@ class BuildItemSearch extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return InkWell(
       onTap: (){
-       // navigateTo(context, AddOrUpdateProductView(isUpdate: true,model: model,uId: uId,));
+        navigateTo(context,  AddUpdateView(isUpdate: true,model: model,));
       },
       child: Container(
         decoration: BoxDecoration(

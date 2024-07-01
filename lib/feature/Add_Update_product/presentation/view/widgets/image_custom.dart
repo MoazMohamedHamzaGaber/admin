@@ -1,12 +1,15 @@
-import 'package:admin/core/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../data/model/product_model.dart';
 import '../../manage/cubit/cubit.dart';
 import '../../manage/cubit/states.dart';
 import 'custom_show_dialog.dart';
 
 class ImageCustom extends StatelessWidget {
-  const ImageCustom({super.key});
+  const ImageCustom({super.key, required this.isUpdate, required this.model});
+
+  final bool isUpdate;
+  final ProductModel model;
 
   @override
   Widget build(BuildContext context) {
@@ -26,18 +29,24 @@ class ImageCustom extends StatelessWidget {
                 shape: BoxShape.rectangle,
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: cubit.addProductsRepo.profileImageFile == null
-                       ?const NetworkImage(
-                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxddtPSxt3mS3QjGibU-bVEPkoBgh_852nNRuU2_CuZ2sEEJJD9VEcGBZ9OGmlv_LmGdg&usqp=CAU')
-                      : FileImage(cubit.addProductsRepo.profileImageFile!) as ImageProvider,
+                  image: isUpdate
+                      ? cubit.addProductsRepo.profileImageFile == null
+                          ? NetworkImage(model.productImage!)
+                          : FileImage(cubit.addProductsRepo.profileImageFile!)
+                              as ImageProvider
+                      : cubit.addProductsRepo.profileImageFile == null
+                          ? const NetworkImage(
+                              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxddtPSxt3mS3QjGibU-bVEPkoBgh_852nNRuU2_CuZ2sEEJJD9VEcGBZ9OGmlv_LmGdg&usqp=CAU')
+                          : FileImage(cubit.addProductsRepo.profileImageFile!)
+                              as ImageProvider,
                 ),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  if(cubit.addProductsRepo.profileImageFile ==null)
+                  if (cubit.addProductsRepo.profileImageFile == null)
                     TextButton(
-                      child:  const Text(
+                      child: const Text(
                         'Pick product image',
                         style: TextStyle(color: Colors.blue),
                       ),
@@ -48,7 +57,7 @@ class ImageCustom extends StatelessWidget {
                 ],
               ),
             ),
-            if(cubit.addProductsRepo.profileImageFile !=null)
+            if (cubit.addProductsRepo.profileImageFile != null)
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 40,
@@ -61,7 +70,7 @@ class ImageCustom extends StatelessWidget {
                           'Pick another image',
                           style: TextStyle(color: Colors.blue),
                         ),
-                        onPressed: (){
+                        onPressed: () {
                           customShowDialog(context, cubit);
                         },
                       ),
@@ -83,31 +92,4 @@ class ImageCustom extends StatelessWidget {
       },
     );
   }
-
 }
-Widget buildMaterial({
-  required IconData iconData,
-  required String text,
-  required Function function,
-}) =>
-    MaterialButton(
-      onPressed: () {
-        function();
-      },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            iconData,
-            color: Colors.blue,
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          Text(
-            text,
-            style: AppStyles.style18.copyWith(color: Colors.blue),
-          ),
-        ],
-      ),
-    );

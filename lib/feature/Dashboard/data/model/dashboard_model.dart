@@ -1,3 +1,4 @@
+import 'package:admin/feature/Add_Update_product/data/model/product_model.dart';
 import 'package:admin/feature/all_products/presentation/view/all_products_view.dart';
 
 import '../../../../core/utils/const.dart';
@@ -22,7 +23,15 @@ class DashboardModel {
       function: (context) {
         navigateTo(
             context,
-            const AddUpdateView());
+            AddUpdateView(
+              isUpdate: false,
+              model: ProductModel(
+                  productPrice: '',
+                  productTitle: '',
+                  productDescription: '',
+                  productQuantity: '',
+              ),
+            ));
       },
     ),
     DashboardModel(
