@@ -3,17 +3,17 @@ import '../../../../../core/utils/components.dart';
 import '../../../../../core/utils/const.dart';
 
 class ButtonSection extends StatefulWidget {
-   const ButtonSection({super.key, required this.function,required this.cubit});
+   const ButtonSection({super.key, required this.cubit,required this.productID,required this.fromKey});
 
-  final Function function;
   final cubit;
+  final productID;
+  final fromKey;
 
   @override
   State<ButtonSection> createState() => _ButtonSectionState();
 }
 
 class _ButtonSectionState extends State<ButtonSection> {
-  var fromKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,29 @@ class _ButtonSectionState extends State<ButtonSection> {
             iconData:Icons.upload,
             color: Colors.blue,
             function: (){
-              widget.function();
+              if (widget.cubit.selectedCategoryType == null) {
+                buildShowDialog(
+                  context: context,
+                  image: 'assets/images/warning.png',
+                  name: 'Category is empty',
+                  function: () {
+                    Navigator.pop(context);
+                  },
+                );
+              } else if (widget.fromKey.currentState!.validate()) {
+                widget.cubit.addProduct(
+                  productPrice: priceController.text,
+                  productTitle: titleController.text,
+                  productDescription:
+                  descriptionController.text,
+                  productQuantity: quantityController.text,
+                  productCategory:
+                  widget.cubit.selectedCategoryType!,
+                  productId:widget.productID,
+                  context: context,
+                );
+              }
+              FocusScope.of(context).unfocus();
             },
           ),
         ),

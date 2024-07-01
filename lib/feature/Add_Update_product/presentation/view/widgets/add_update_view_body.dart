@@ -64,31 +64,8 @@ class _AddUpdateViewBodyState extends State<AddUpdateViewBody> {
                         const TextFieldSection(),
                         const Spacer(),
                         ButtonSection(
-                          function: () {
-                            if (cubit.selectedCategoryType == null) {
-                              buildShowDialog(
-                                context: context,
-                                image: 'assets/images/warning.png',
-                                name: 'Category is empty',
-                                function: () {
-                                  Navigator.pop(context);
-                                },
-                              );
-                            } else if (formKey.currentState!.validate()) {
-                              cubit.addProduct(
-                                productPrice: priceController.text,
-                                productTitle: titleController.text,
-                                productDescription:
-                                descriptionController.text,
-                                productQuantity: quantityController.text,
-                                productCategory:
-                                cubit.selectedCategoryType!,
-                                productId:productID,
-                                context: context,
-                              );
-                            }
-                            FocusScope.of(context).unfocus();
-                          }, cubit: cubit,
+                           cubit: cubit, productID: productID,
+                          fromKey: formKey,
                         ),
                       ],
                     ),
