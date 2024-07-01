@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../data/model/product_model.dart';
@@ -31,12 +32,11 @@ class ImageCustom extends StatelessWidget {
                   fit: BoxFit.cover,
                   image: isUpdate
                       ? cubit.addProductsRepo.profileImageFile == null
-                          ? NetworkImage(model.productImage!)
+                  ?CachedNetworkImageProvider(model.productImage!)
                           : FileImage(cubit.addProductsRepo.profileImageFile!)
                               as ImageProvider
                       : cubit.addProductsRepo.profileImageFile == null
-                          ? const NetworkImage(
-                              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxddtPSxt3mS3QjGibU-bVEPkoBgh_852nNRuU2_CuZ2sEEJJD9VEcGBZ9OGmlv_LmGdg&usqp=CAU')
+                  ?const CachedNetworkImageProvider('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxddtPSxt3mS3QjGibU-bVEPkoBgh_852nNRuU2_CuZ2sEEJJD9VEcGBZ9OGmlv_LmGdg&usqp=CAU')
                           : FileImage(cubit.addProductsRepo.profileImageFile!)
                               as ImageProvider,
                 ),
