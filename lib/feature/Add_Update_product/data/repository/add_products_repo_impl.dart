@@ -7,7 +7,7 @@ import '../../../../core/error/failure.dart';
 
 class AddProductsRepoImpl implements AddProductsRepo {
   @override
-  Future<Either<Failure, void>> addProducts({
+  Future<Either<FirebaseFailure, void>> addProducts({
     required String productId,
     String? productImage,
     required String productPrice,

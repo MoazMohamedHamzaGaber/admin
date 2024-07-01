@@ -1,4 +1,5 @@
 // import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -187,13 +188,15 @@ Future<void> buildShowDialog({
       ),
     );
 //
-// Future awesomeDialog(context,String text)async {
-//   return await AwesomeDialog(
-//     context: context,
-//     title: 'Error',
-//     body: Text(text),
-//   ).show();
-// }
+Future awesomeDialog(context,String text,DialogType dialogType)async {
+  return await AwesomeDialog(
+    context: context,
+    padding: const EdgeInsets.all(12),
+    title: 'هام',
+    dialogType: dialogType,
+    body:  Text(text),
+  ).show();
+}
 //
 // Future buildShowLoading(context) async {
 //   return await showDialog(

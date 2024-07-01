@@ -5,8 +5,10 @@ import 'package:admin/feature/Add_Update_product/presentation/manage/cubit/state
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../../../../../core/utils/components.dart';
 
 class ProductsCubit extends Cubit<ProductsStates>{
   ProductsCubit(this.addProductsRepo):super(InitialProductsStates());
@@ -62,12 +64,7 @@ class ProductsCubit extends Cubit<ProductsStates>{
     required context,
 }) async{
     if (profileImageFile == null) {
-      await AwesomeDialog(
-        context: context,
-        title: 'هام',
-        dialogType: DialogType.error,
-        body: const Text('Please Choose Image'),
-      ).show();
+      awesomeDialog(context, 'Please Choose Image',DialogType.error);
     }
     emit(AddProductsLoadingStates());
     await ref!.putFile(profileImageFile!);
@@ -82,7 +79,7 @@ class ProductsCubit extends Cubit<ProductsStates>{
       productImage: productImage,
     );
     result.fold(
-          (failure) => emit(AddProductsErrorStates(error: 'failure.message')),
+          (failure) => emit(AddProductsErrorStates(error: failure.message)),
           (_) => emit(AddProductsSuccessStates()),
     );
   }

@@ -1,4 +1,6 @@
+import 'package:admin/core/loading/loading_manager.dart';
 import 'package:admin/feature/Add_Update_product/presentation/view/widgets/text_field_section.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uuid/uuid.dart';
@@ -25,61 +27,72 @@ class _AddUpdateViewBodyState extends State<AddUpdateViewBody> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ProductsCubit, ProductsStates>(
-      listener: (BuildContext context, state) {},
+      listener: (BuildContext context, state) {
+        if (state is AddProductsSuccessStates) {
+          awesomeDialog(context, 'Product added successfully!',DialogType.success);
+        }
+        if(state is AddProductsErrorStates){
+          awesomeDialog(context, state.error,DialogType.error);
+        }
+      },
       builder: (BuildContext context, Object? state) {
         var cubit = ProductsCubit.get(context);
-        return Form(
-          key: formKey,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: CustomScrollView(
-              physics: const BouncingScrollPhysics(),
-              slivers: [
-                SliverFillRemaining(
-                  hasScrollBody: false,
-                  child: Column(
-                    children: [
-                       const ImageCustom(),
-                      const SizedBox(
-                        height: 25,
-                      ),
-                      const DropdownButtonSection(),
-                      const SizedBox(
-                        height: 25,
-                      ),
-                      const TextFieldSection(),
-                      const Spacer(),
-                      ButtonSection(
-                        function: () {
-                          if (cubit.selectedCategoryType == null) {
-                            buildShowDialog(
-                              context: context,
-                              image: 'assets/images/warning.png',
-                              name: 'Category is empty',
-                              function: () {
-                                Navigator.pop(context);
-                              },
-                            );
-                          } else if (formKey.currentState!.validate()) {
-                            cubit.addProduct(
-                              productPrice: priceController.text,
-                              productTitle: titleController.text,
-                              productDescription:
-                              descriptionController.text,
-                              productQuantity: quantityController.text,
-                              productCategory:
-                              cubit.selectedCategoryType!,
-                              productId:productID,
-                              context: context,
-                            );
-                          }
-                          FocusScope.of(context).unfocus();
-                        }, cubit: cubit,
-                      ),
-                    ],
+        return LoadingManager(
+          isLoading: state is AddProductsLoadingStates &&
+              cubit.profileImageFile != null,
+          child: Form(
+            key: formKey,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: CustomScrollView(
+                physics: const BouncingScrollPhysics(),
+                slivers: [
+                  SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: Column(
+                      children: [
+                         const ImageCustom(),
+                        const SizedBox(
+                          height: 25,
+                        ),
+                        const DropdownButtonSection(),
+                        const SizedBox(
+                          height: 25,
+                        ),
+                        const TextFieldSection(),
+                        const Spacer(),
+                        ButtonSection(
+                          function: () {
+                            if (cubit.selectedCategoryType == null) {
+                              buildShowDialog(
+                                context: context,
+                                image: 'assets/images/warning.png',
+                                name: 'Category is empty',
+                                function: () {
+                                  Navigator.pop(context);
+                                },
+                              );
+                            } else if (formKey.currentState!.validate()) {
+                              cubit.addProduct(
+                                productPrice: priceController.text,
+                                productTitle: titleController.text,
+                                productDescription:
+                                descriptionController.text,
+                                productQuantity: quantityController.text,
+                                productCategory:
+                                cubit.selectedCategoryType!,
+                                productId:productID,
+                                context: context,
+                              );
+                            }
+                            FocusScope.of(context).unfocus();
+                          }, cubit: cubit,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );
