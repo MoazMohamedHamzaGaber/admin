@@ -6,7 +6,7 @@ import 'package:image_picker/image_picker.dart';
 
 abstract class AddProductsRepo{
   File? profileImageFile;
-  Future<Either<FirebaseFailure,void>> addProducts({
+  Future<Either<Failure,void>> addProducts({
     required String productId,
     String? productImage,
     required String productPrice,

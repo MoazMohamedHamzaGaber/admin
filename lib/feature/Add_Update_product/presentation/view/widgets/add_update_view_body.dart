@@ -67,6 +67,9 @@ class _AddUpdateViewBodyState extends State<AddUpdateViewBody> {
                            cubit: cubit, productID: productID,
                           fromKey: formKey,
                         ),
+                        const SizedBox(
+                          height: 10,
+                        ),
                       ],
                     ),
                   ),

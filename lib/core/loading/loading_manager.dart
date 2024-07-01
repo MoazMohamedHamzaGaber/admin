@@ -20,7 +20,7 @@ class LoadingManager extends StatelessWidget {
           Center(
             child: LoadingAnimationWidget.threeRotatingDots(
               color: Colors.white,
-              size: 100,
+              size: 90,
             ),
           )
         ]

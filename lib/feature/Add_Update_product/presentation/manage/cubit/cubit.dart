@@ -1,5 +1,7 @@
+import 'package:admin/core/utils/components.dart';
 import 'package:admin/feature/Add_Update_product/data/repository/add_products_repo.dart';
 import 'package:admin/feature/Add_Update_product/presentation/manage/cubit/states.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -26,7 +28,7 @@ class ProductsCubit extends Cubit<ProductsStates>{
   Future getProfileImage(ImageSource imageSource) async {
    var result=await addProductsRepo.getProfileImage(imageSource: imageSource);
    result.fold(
-         (failure) => emit(CreateProfileImageErrorState(error: failure.message)),
+         (failure) => emit(CreateProfileImageErrorState(error: failure.errMessage)),
          (_) => emit(CreateProfileImageSuccessState()),
    );
   }
@@ -56,9 +58,14 @@ class ProductsCubit extends Cubit<ProductsStates>{
       productTitle: productTitle,
       productImage: productImage, context: context,
     );
-    result.fold(
-          (failure) => emit(AddProductsErrorStates(error: failure.message)),
-          (_) => emit(AddProductsSuccessStates()),
-    );
+    result.fold((failure){
+      emit(AddProductsErrorStates(error: failure.errMessage));
+      print('/////////////////////////////////////////');
+      print(failure.errMessage);
+      print('/////////////////////////////////////////');
+      awesomeDialog(context, 'text', DialogType.error);
+    }, (books) {
+      emit(AddProductsSuccessStates());
+    });
   }
 }

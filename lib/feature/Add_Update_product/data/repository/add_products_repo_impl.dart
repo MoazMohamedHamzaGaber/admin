@@ -17,7 +17,7 @@ class AddProductsRepoImpl implements AddProductsRepo {
 
   Reference? ref;
   @override
-  Future<Either<FirebaseFailure, void>> addProducts({
+  Future<Either<Failure, void>> addProducts({
     required String productId,
     String? productImage,
     required String productPrice,
@@ -50,6 +50,9 @@ class AddProductsRepoImpl implements AddProductsRepo {
             .set(productModel.toMap());
         return right(unit);
       }catch (e) {
+        if(e is FirebaseException) {
+          return left(FirebaseFailure.fromFirebaseException(e));
+        }
         return left(FirebaseFailure(e.toString()));
       }
     }
