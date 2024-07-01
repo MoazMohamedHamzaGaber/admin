@@ -9,7 +9,11 @@ class RemoveSelectedAccountState extends ProductsStates{}
 
 class CreateProfileImageSuccessState extends ProductsStates{}
 
-class CreateProfileImageErrorState extends ProductsStates{}
+class CreateProfileImageErrorState extends ProductsStates{
+  final String error;
+
+  CreateProfileImageErrorState({required this.error});
+}
 
 class RemoveImageState extends ProductsStates{}
 

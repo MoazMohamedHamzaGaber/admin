@@ -1,14 +1,7 @@
-import 'dart:io';
-
 import 'package:admin/feature/Add_Update_product/data/repository/add_products_repo.dart';
 import 'package:admin/feature/Add_Update_product/presentation/manage/cubit/states.dart';
-import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-
-import '../../../../../core/utils/components.dart';
 
 class ProductsCubit extends Cubit<ProductsStates>{
   ProductsCubit(this.addProductsRepo):super(InitialProductsStates());
@@ -29,27 +22,17 @@ class ProductsCubit extends Cubit<ProductsStates>{
     emit(RemoveSelectedAccountState());
   }
 
-  File? profileImageFile;
-  var picker = ImagePicker();
-
-  Reference? ref;
 
   Future getProfileImage(ImageSource imageSource) async {
-    final pickedFile = await picker.pickImage(source: imageSource);
-    if (pickedFile != null) {
-      profileImageFile = File(pickedFile.path);
-      print(pickedFile.path.toString());
-      ref = firebase_storage.FirebaseStorage.instance.ref().child(
-          'products/${Uri.file(profileImageFile!.path).pathSegments.last}');
-      emit(CreateProfileImageSuccessState());
-    } else {
-      print('No Image Selected');
-      emit(CreateProfileImageErrorState());
-    }
+   var result=await addProductsRepo.getProfileImage(imageSource: imageSource);
+   result.fold(
+         (failure) => emit(CreateProfileImageErrorState(error: failure.message)),
+         (_) => emit(CreateProfileImageSuccessState()),
+   );
   }
 
   void removeImage() {
-    profileImageFile = null;
+    addProductsRepo.profileImageFile = null;
     emit(RemoveImageState());
   }
 
@@ -63,12 +46,7 @@ class ProductsCubit extends Cubit<ProductsStates>{
     required String productCategory,
     required context,
 }) async{
-    if (profileImageFile == null) {
-      awesomeDialog(context, 'Please Choose Image',DialogType.error);
-    }
     emit(AddProductsLoadingStates());
-    await ref!.putFile(profileImageFile!);
-    productImage = await ref!.getDownloadURL();
     var result=await addProductsRepo.addProducts(
         productId: productId,
       productCategory: productCategory,
@@ -76,7 +54,7 @@ class ProductsCubit extends Cubit<ProductsStates>{
       productPrice: productPrice,
       productQuantity: productQuantity,
       productTitle: productTitle,
-      productImage: productImage,
+      productImage: productImage, context: context,
     );
     result.fold(
           (failure) => emit(AddProductsErrorStates(error: failure.message)),

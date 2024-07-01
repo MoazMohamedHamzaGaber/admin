@@ -26,16 +26,16 @@ class ImageCustom extends StatelessWidget {
                 shape: BoxShape.rectangle,
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: cubit.profileImageFile == null
+                  image: cubit.addProductsRepo.profileImageFile == null
                        ?const NetworkImage(
                       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxddtPSxt3mS3QjGibU-bVEPkoBgh_852nNRuU2_CuZ2sEEJJD9VEcGBZ9OGmlv_LmGdg&usqp=CAU')
-                      : FileImage(cubit.profileImageFile!) as ImageProvider,
+                      : FileImage(cubit.addProductsRepo.profileImageFile!) as ImageProvider,
                 ),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  if(cubit.profileImageFile ==null)
+                  if(cubit.addProductsRepo.profileImageFile ==null)
                     TextButton(
                       child:  const Text(
                         'Pick product image',
@@ -48,7 +48,7 @@ class ImageCustom extends StatelessWidget {
                 ],
               ),
             ),
-            if(cubit.profileImageFile !=null)
+            if(cubit.addProductsRepo.profileImageFile !=null)
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 40,

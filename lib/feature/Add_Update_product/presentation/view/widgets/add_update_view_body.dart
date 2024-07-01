@@ -41,7 +41,7 @@ class _AddUpdateViewBodyState extends State<AddUpdateViewBody> {
         var cubit = ProductsCubit.get(context);
         return LoadingManager(
           isLoading: state is AddProductsLoadingStates &&
-              cubit.profileImageFile != null,
+              cubit.addProductsRepo.profileImageFile != null,
           child: Form(
             key: formKey,
             child: Padding(
