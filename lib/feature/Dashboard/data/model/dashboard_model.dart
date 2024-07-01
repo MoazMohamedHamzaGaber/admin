@@ -1,3 +1,5 @@
+import 'package:admin/feature/all_products/presentation/view/all_products_view.dart';
+
 import '../../../../core/utils/const.dart';
 import '../../../Add_Update_product/presentation/view/add_update_view.dart';
 import '../../../Order/presentation/view/order_view.dart';
@@ -27,7 +29,7 @@ class DashboardModel {
       title: 'Inspect all products',
       image: 'assets/images/shopping_cart.png',
       function: (context) {
-     //   navigateTo(context, const SearchView());
+        navigateTo(context, const AllProductsView());
       },
     ),
     DashboardModel(
