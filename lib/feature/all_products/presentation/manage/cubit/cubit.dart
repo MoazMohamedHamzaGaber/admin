@@ -25,7 +25,7 @@ class AllProductsCubit extends Cubit<AllProductsStates>{
 
   void searchProducts(String query) async {
     emit(SearchProductsLoadingStates());
-    final result = await getProductsRepos.searchProducts(query);
+    final result = await getProductsRepos.searchProducts(query.toLowerCase());
     result.fold(
           (failure) => emit(SearchProductsErrorStates( errMessage:failure.errMessage)),
           (products) => emit(SearchProductsSuccessStates(products: products)),

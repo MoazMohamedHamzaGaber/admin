@@ -12,6 +12,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../../../core/error/failure.dart';
 import '../../../../core/utils/components.dart';
+import '../../../../core/utils/const.dart';
 
 class AddProductsRepoImpl implements AddProductsRepo {
   var picker = ImagePicker();
@@ -37,7 +38,7 @@ class AddProductsRepoImpl implements AddProductsRepo {
       productCategory: productCategory,
       productImage: productImage,
       productPrice: productPrice,
-      productTitle: productTitle,
+      productTitle: capitalize(productTitle),
       productDescription: productDescription,
       productId: productId,
       productQuantity: productQuantity,
@@ -66,28 +67,40 @@ class AddProductsRepoImpl implements AddProductsRepo {
       required String productTitle,
       required String productDescription,
       required String productQuantity,
-      required String productCategory,
+       String? productCategory,
       required context,
     }) async {
       try {
-        if (productImage != null && profileImageFile != null) {
+        if(profileImageFile ==null){
+          var firebase = FirebaseFirestore.instance;
+          await firebase.collection('products').doc(productId).update({
+            'productId': productId,
+            'productPrice': productPrice,
+            'productTitle': productTitle,
+            'productQuantity': productQuantity,
+            'productDescription': productDescription,
+            if(selectedCategoryType !=null)
+              'productCategory': productCategory,
+          });
+
+          return right(unit);
+        }else{
           await ref!.putFile(profileImageFile!);
           productImage = await ref!.getDownloadURL();
+          var firebase = FirebaseFirestore.instance;
+          await firebase.collection('products').doc(productId).update({
+            'productId': productId,
+            'productImage':productImage,
+            'productPrice': productPrice,
+            'productTitle': productTitle,
+            'productQuantity': productQuantity,
+            'productDescription': productDescription,
+            if(selectedCategoryType !=null)
+              'productCategory': productCategory,
+          });
+
+          return right(unit);
         }
-
-        var firebase = FirebaseFirestore.instance;
-        await firebase.collection('products').doc(productId).update({
-          'productId': productId,
-          if (productImage != null) 'productImage': productImage,
-          'productPrice': productPrice,
-          'productTitle': productTitle,
-          'productQuantity': productQuantity,
-          'productDescription': productDescription,
-          if(selectedCategoryType !=null)
-            'productCategory': productCategory,
-        });
-
-        return right(unit);
       } catch (e) {
         // Enhanced error logging
         print('Error occurred in updateProducts: $e');

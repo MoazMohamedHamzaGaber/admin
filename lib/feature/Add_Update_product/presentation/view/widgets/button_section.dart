@@ -13,6 +13,7 @@ class ButtonSection extends StatefulWidget {
   final fromKey;
   final bool isUpdate;
 
+
   @override
   State<ButtonSection> createState() => _ButtonSectionState();
 }
@@ -20,6 +21,7 @@ class ButtonSection extends StatefulWidget {
 class _ButtonSectionState extends State<ButtonSection> {
 
   final productID = const Uuid().v4();
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -55,7 +57,7 @@ class _ButtonSectionState extends State<ButtonSection> {
                          productDescription: widget.cubit.descriptionController.text,
                          productQuantity: widget.cubit.quantityController.text,
                          productCategory: widget.cubit.addProductsRepo.selectedCategoryType,
-                        productId:'21deaa40-ff74-49e8-bf4f-0211c0ff4502',
+                        productId:productID,
                       );
                     }
                   : () {

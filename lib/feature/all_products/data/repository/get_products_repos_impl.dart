@@ -4,6 +4,8 @@ import 'package:admin/feature/all_products/data/repository/get_products_repos.da
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 
+import '../../../../core/utils/const.dart';
+
 class GetProductsReposImpl implements GetProductsRepos {
   @override
   Stream<Either<Failure, List<ProductModel>>> fetchProducts() {
@@ -25,9 +27,11 @@ class GetProductsReposImpl implements GetProductsRepos {
       final CollectionReference productsCollection =
       FirebaseFirestore.instance.collection('products');
 
+      final normalizedQuery = capitalize(query);
+
       QuerySnapshot querySnapshot = await productsCollection
-          .where('productTitle', isGreaterThanOrEqualTo: query)
-          .where('productTitle', isLessThanOrEqualTo: query + '\uf8ff')
+          .where('productTitle', isGreaterThanOrEqualTo: normalizedQuery)
+          .where('productTitle', isLessThanOrEqualTo: normalizedQuery + '\uf8ff')
           .get();
 
       List<ProductModel> products = querySnapshot.docs

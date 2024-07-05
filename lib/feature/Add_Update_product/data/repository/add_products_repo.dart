@@ -26,7 +26,7 @@ abstract class AddProductsRepo{
     required String productTitle,
     required String productDescription,
     required String productQuantity,
-    required String productCategory,
+    String? productCategory,
     required context,
   });
 

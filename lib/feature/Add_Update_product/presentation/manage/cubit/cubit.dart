@@ -45,6 +45,7 @@ class ProductsCubit extends Cubit<ProductsStates>{
     emit(RemoveImageState());
   }
 
+
   void addProduct({
     required String productId,
     String? productImage,
@@ -83,7 +84,7 @@ class ProductsCubit extends Cubit<ProductsStates>{
     required String productTitle,
     required String productDescription,
     required String productQuantity,
-    required String productCategory,
+    String? productCategory,
     required context,
   }) async {
     emit(UpdateProductsLoadingStates());
@@ -94,7 +95,7 @@ class ProductsCubit extends Cubit<ProductsStates>{
       productTitle: productTitle,
       productDescription: productDescription,
       productQuantity: productQuantity,
-      productCategory: productCategory,
+      productCategory: productCategory!,
       productImage: productImage,
       context: context,
     );
