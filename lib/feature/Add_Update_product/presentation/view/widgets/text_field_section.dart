@@ -7,10 +7,11 @@ import '../../../../../core/utils/components.dart';
 import '../../../../../core/utils/const.dart';
 
 class TextFieldSection extends StatelessWidget {
-  const TextFieldSection({super.key, required this.model, required this.isUpdate});
+  const TextFieldSection({super.key, required this.model, required this.isUpdate,required this.cubit});
 
   final ProductModel model;
   final bool isUpdate;
+  final cubit;
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +19,8 @@ class TextFieldSection extends StatelessWidget {
       children: [
         buildTextField(
           context: context,
-          controller: titleController,
-          title:isUpdate? model.productTitle:'Product Title',
+          controller: cubit.titleController,
+          title:isUpdate?cubit.titleController.text= model.productTitle:'Product Title',
           keyboardType: TextInputType.multiline,
           maxLength: 80,
           validate: 'Please enter a valid title',
@@ -33,8 +34,8 @@ class TextFieldSection extends StatelessWidget {
               flex: 1,
               child: buildTextField(
                   context: context,
-                  controller: priceController,
-                  title:isUpdate? model.productPrice: 'Price',
+                  controller: cubit.priceController,
+                  title:isUpdate?cubit.priceController.text= model.productPrice: 'Price',
                   keyboardType: TextInputType.number,
                   validate: 'Price is missing',
                   inputFormatters: [
@@ -52,8 +53,8 @@ class TextFieldSection extends StatelessWidget {
               flex: 1,
               child: buildTextField(
                 context: context,
-                controller: quantityController,
-                title:isUpdate? model.productQuantity: 'QTY',
+                controller: cubit.quantityController,
+                title:isUpdate?cubit.quantityController.text= model.productQuantity: 'QTY',
                 keyboardType: TextInputType.number,
                 inputFormatters:  [
                   FilteringTextInputFormatter.digitsOnly,
@@ -65,8 +66,8 @@ class TextFieldSection extends StatelessWidget {
         ),
         buildTextField(
           context: context,
-          controller: descriptionController,
-          title:isUpdate? model.productDescription: 'Product Description',
+          controller: cubit.descriptionController,
+          title:isUpdate?cubit.descriptionController.text= model.productDescription: 'Product Description',
           keyboardType: TextInputType.multiline,
           maxLength: 1000,
           //minLines: 3,

@@ -1,13 +1,11 @@
 import 'package:admin/core/loading/loading_manager.dart';
 import 'package:admin/feature/Add_Update_product/presentation/view/widgets/text_field_section.dart';
-import 'package:admin/feature/Dashboard/presentation/view/dashboard_view.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:uuid/uuid.dart';
-
 import '../../../../../core/utils/components.dart';
 import '../../../../../core/utils/const.dart';
+import '../../../../Dashboard/presentation/view/dashboard_view.dart';
 import '../../../data/model/product_model.dart';
 import '../../../data/repository/add_products_repo_impl.dart';
 import '../../manage/cubit/cubit.dart';
@@ -30,8 +28,6 @@ class AddUpdateViewBody extends StatefulWidget {
 class _AddUpdateViewBodyState extends State<AddUpdateViewBody> {
   var formKey = GlobalKey<FormState>();
 
-  final productID = const Uuid().v4();
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -46,12 +42,21 @@ class _AddUpdateViewBodyState extends State<AddUpdateViewBody> {
           if (state is AddProductsErrorStates) {
             awesomeDialog(context, state.error, DialogType.error);
           }
+
+          if (state is UpdateProductsSuccessStates) {
+            navigateTo(context, const DashBoardView());
+            awesomeDialog(
+                context, 'Product update successfully!', DialogType.success);
+          }
+          if (state is UpdateProductsErrorStates) {
+            awesomeDialog(context, state.errMessage, DialogType.error);
+          }
         },
         builder: (BuildContext context, Object? state) {
           var cubit = ProductsCubit.get(context);
           return LoadingManager(
             isLoading: state is AddProductsLoadingStates &&
-                cubit.addProductsRepo.profileImageFile != null,
+                cubit.addProductsRepo.profileImageFile != null  || state is UpdateProductsLoadingStates,
             child: Form(
               key: formKey,
               child: Padding(
@@ -63,10 +68,10 @@ class _AddUpdateViewBodyState extends State<AddUpdateViewBody> {
                       hasScrollBody: false,
                       child: Column(
                         children: [
-                           ImageCustom(
-                             isUpdate: widget.isUpdate,
-                             model: widget.model,
-                           ),
+                          ImageCustom(
+                            isUpdate: widget.isUpdate,
+                            model: widget.model,
+                          ),
                           const SizedBox(
                             height: 25,
                           ),
@@ -80,11 +85,11 @@ class _AddUpdateViewBodyState extends State<AddUpdateViewBody> {
                           TextFieldSection(
                             isUpdate: widget.isUpdate,
                             model: widget.model,
+                            cubit: cubit,
                           ),
                           const Spacer(),
                           ButtonSection(
                             cubit: cubit,
-                            productID: productID,
                             fromKey: formKey,
                             isUpdate: widget.isUpdate,
                           ),

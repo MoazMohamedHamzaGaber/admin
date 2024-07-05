@@ -1,4 +1,6 @@
 
+import '../../../data/model/product_model.dart';
+
 abstract class ProductsStates{}
 
 class InitialProductsStates extends ProductsStates{}
@@ -29,4 +31,14 @@ class AddProductsErrorStates extends ProductsStates{
   final String error;
 
   AddProductsErrorStates({required this.error});
+}
+
+class UpdateProductsSuccessStates extends ProductsStates{}
+
+class UpdateProductsLoadingStates extends ProductsStates{}
+
+class UpdateProductsErrorStates extends ProductsStates{
+  final String errMessage;
+
+  UpdateProductsErrorStates({required this.errMessage});
 }

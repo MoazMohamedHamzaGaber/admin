@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:admin/feature/Add_Update_product/data/model/product_model.dart';
@@ -57,6 +58,46 @@ class AddProductsRepoImpl implements AddProductsRepo {
       }
     }
 
+    @override
+    Future<Either<Failure, void>> updateProducts({
+      required String productId,
+      String? productImage,
+      required String productPrice,
+      required String productTitle,
+      required String productDescription,
+      required String productQuantity,
+      required String productCategory,
+      required context,
+    }) async {
+      try {
+        if (productImage != null && profileImageFile != null) {
+          await ref!.putFile(profileImageFile!);
+          productImage = await ref!.getDownloadURL();
+        }
+
+        var firebase = FirebaseFirestore.instance;
+        await firebase.collection('products').doc(productId).update({
+          'productId': productId,
+          if (productImage != null) 'productImage': productImage,
+          'productPrice': productPrice,
+          'productTitle': productTitle,
+          'productQuantity': productQuantity,
+          'productDescription': productDescription,
+          if(selectedCategoryType !=null)
+            'productCategory': productCategory,
+        });
+
+        return right(unit);
+      } catch (e) {
+        // Enhanced error logging
+        print('Error occurred in updateProducts: $e');
+        if (e is FirebaseException) {
+          return left(FirebaseFailure.fromFirebaseException(e));
+        }
+        return left(FirebaseFailure(e.toString()));
+      }
+    }
+
   @override
   Future<Either<FirebaseFailure,void>> getProfileImage({required ImageSource imageSource})async {
 
@@ -78,5 +119,8 @@ class AddProductsRepoImpl implements AddProductsRepo {
 
   @override
   File? profileImageFile;
+
+  @override
+  String? selectedCategoryType;
 
 }

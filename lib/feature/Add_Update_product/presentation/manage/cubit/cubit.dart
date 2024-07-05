@@ -2,8 +2,11 @@ import 'package:admin/core/utils/components.dart';
 import 'package:admin/feature/Add_Update_product/data/repository/add_products_repo.dart';
 import 'package:admin/feature/Add_Update_product/presentation/manage/cubit/states.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../../../../../core/utils/const.dart';
 
 class ProductsCubit extends Cubit<ProductsStates>{
   ProductsCubit(this.addProductsRepo):super(InitialProductsStates());
@@ -12,15 +15,19 @@ class ProductsCubit extends Cubit<ProductsStates>{
 
   final AddProductsRepo addProductsRepo;
 
-  String? selectedCategoryType;
+
+  var titleController=TextEditingController();
+  var priceController=TextEditingController();
+  var quantityController=TextEditingController();
+  var descriptionController=TextEditingController();
 
   void changeSelectedAccount(value) {
-    selectedCategoryType = value;
+    addProductsRepo.selectedCategoryType = value;
     emit(ProductChangeSelectedCategoryStates());
   }
 
   void removeSelectedAccount() {
-    selectedCategoryType = null;
+    addProductsRepo.selectedCategoryType = null;
     emit(RemoveSelectedAccountState());
   }
 
@@ -66,6 +73,40 @@ class ProductsCubit extends Cubit<ProductsStates>{
       awesomeDialog(context, 'text', DialogType.error);
     }, (books) {
       emit(AddProductsSuccessStates());
+    });
+  }
+
+  void updateProduct({
+    required String productId,
+    String? productImage,
+    required String productPrice,
+    required String productTitle,
+    required String productDescription,
+    required String productQuantity,
+    required String productCategory,
+    required context,
+  }) async {
+    emit(UpdateProductsLoadingStates());
+
+    var result = await addProductsRepo.updateProducts(
+      productId: productId,
+      productPrice: productPrice,
+      productTitle: productTitle,
+      productDescription: productDescription,
+      productQuantity: productQuantity,
+      productCategory: productCategory,
+      productImage: productImage,
+      context: context,
+    );
+
+    result.fold((failure) {
+      print('/////////////////////////////////////////');
+      print('Failure: ${failure.errMessage}');
+      print('/////////////////////////////////////////');
+      emit(UpdateProductsErrorStates(errMessage: failure.errMessage));
+      awesomeDialog(context, 'Error', DialogType.error);
+    }, (_) {
+      emit(UpdateProductsSuccessStates());
     });
   }
 }

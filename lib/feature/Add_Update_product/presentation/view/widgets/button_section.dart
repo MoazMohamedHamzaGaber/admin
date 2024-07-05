@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 import '../../../../../core/utils/components.dart';
-import '../../../../../core/utils/const.dart';
 
 class ButtonSection extends StatefulWidget {
   const ButtonSection(
       {super.key,
       required this.cubit,
-      required this.productID,
       required this.fromKey,
       required this.isUpdate});
 
   final cubit;
-  final productID;
   final fromKey;
   final bool isUpdate;
 
@@ -20,6 +18,8 @@ class ButtonSection extends StatefulWidget {
 }
 
 class _ButtonSectionState extends State<ButtonSection> {
+
+  final productID = const Uuid().v4();
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -31,10 +31,10 @@ class _ButtonSectionState extends State<ButtonSection> {
           function: () {
             widget.cubit.removeImage();
             widget.cubit.removeSelectedAccount();
-            titleController.text = '';
-            priceController.text = '';
-            quantityController.text = '';
-            descriptionController.text = '';
+             widget.cubit.titleController.text = '';
+             widget.cubit.priceController.text = '';
+             widget.cubit.quantityController.text = '';
+             widget.cubit.descriptionController.text = '';
           },
         ),
         const SizedBox(
@@ -48,9 +48,18 @@ class _ButtonSectionState extends State<ButtonSection> {
               function: widget.isUpdate
                   ? () {
                       print('Update');
+                      widget.cubit.updateProduct(
+                        context: context,
+                         productPrice: widget.cubit.priceController.text,
+                        productTitle: widget.cubit.titleController.text,
+                         productDescription: widget.cubit.descriptionController.text,
+                         productQuantity: widget.cubit.quantityController.text,
+                         productCategory: widget.cubit.addProductsRepo.selectedCategoryType,
+                        productId:'21deaa40-ff74-49e8-bf4f-0211c0ff4502',
+                      );
                     }
                   : () {
-                      if (widget.cubit.selectedCategoryType == null) {
+                      if (widget.cubit.addProductsRepo.selectedCategoryType == null) {
                         buildShowDialog(
                           context: context,
                           image: 'assets/images/warning.png',
@@ -61,12 +70,12 @@ class _ButtonSectionState extends State<ButtonSection> {
                         );
                       } else if (widget.fromKey.currentState!.validate()) {
                         widget.cubit.addProduct(
-                          productPrice: priceController.text,
-                          productTitle: titleController.text,
-                          productDescription: descriptionController.text,
-                          productQuantity: quantityController.text,
-                          productCategory: widget.cubit.selectedCategoryType!,
-                          productId: widget.productID,
+                          productPrice: widget.cubit.priceController.text,
+                          productTitle: widget.cubit.titleController.text,
+                          productDescription: widget.cubit.descriptionController.text,
+                          productQuantity: widget.cubit.quantityController.text,
+                          productCategory: widget.cubit.addProductsRepo.selectedCategoryType!,
+                          productId: productID,
                           context: context,
                         );
                       }

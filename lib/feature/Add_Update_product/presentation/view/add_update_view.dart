@@ -13,15 +13,14 @@ class AddUpdateView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(
-        context: context,
-        centerTitle: true,
-        text:isUpdate? 'Update a Product':'Upload a new product',
-        function: (){
-          Navigator.pop(context);
-        },
-      ),
-      body: AddUpdateViewBody(isUpdate: isUpdate, model: model,),
-    );
+        appBar: appBar(
+          context: context,
+          centerTitle: true,
+          text:isUpdate? 'Update a Product':'Upload a new product',
+          function: (){
+            Navigator.pop(context);
+          },
+        ),
+        body: AddUpdateViewBody(isUpdate: isUpdate, model: model));
   }
 }
