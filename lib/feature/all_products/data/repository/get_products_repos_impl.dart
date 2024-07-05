@@ -18,4 +18,25 @@ class GetProductsReposImpl implements GetProductsRepos {
       }
     });
   }
+
+  @override
+  Future<Either<Failure, List<ProductModel>>> searchProducts(String query)async {
+    try {
+      final CollectionReference productsCollection =
+      FirebaseFirestore.instance.collection('products');
+
+      QuerySnapshot querySnapshot = await productsCollection
+          .where('productTitle', isGreaterThanOrEqualTo: query)
+          .where('productTitle', isLessThanOrEqualTo: query + '\uf8ff')
+          .get();
+
+      List<ProductModel> products = querySnapshot.docs
+          .map((doc) => ProductModel.fromJson(doc.data() as Map<String, dynamic>))
+          .toList();
+
+      return Right(products);
+    } catch (e) {
+      return Left(FirebaseFailure(e.toString()));
+    }
+  }
 }

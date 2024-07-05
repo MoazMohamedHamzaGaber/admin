@@ -4,4 +4,5 @@ import 'package:dartz/dartz.dart';
 
 abstract class GetProductsRepos{
  Stream<Either<Failure,List<ProductModel>>> fetchProducts();
+ Future<Either<Failure,List<ProductModel>>> searchProducts(String query);
 }

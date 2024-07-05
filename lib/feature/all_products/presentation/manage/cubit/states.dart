@@ -17,3 +17,18 @@ class AllProductsErrorStates extends AllProductsStates{
 
   AllProductsErrorStates({required this.errMessage});
 }
+
+
+class SearchProductsSuccessStates extends AllProductsStates{
+  final List<ProductModel> products;
+
+  SearchProductsSuccessStates({required this.products});
+}
+
+class SearchProductsLoadingStates extends AllProductsStates{}
+
+class SearchProductsErrorStates extends AllProductsStates{
+  final String errMessage;
+
+  SearchProductsErrorStates({required this.errMessage});
+}

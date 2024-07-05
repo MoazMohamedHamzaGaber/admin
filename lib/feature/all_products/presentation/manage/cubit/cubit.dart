@@ -20,7 +20,15 @@ class AllProductsCubit extends Cubit<AllProductsStates>{
         emit(AllProductsSuccessStates(products: products));
       });
     });
+  }
 
-    
+
+  void searchProducts(String query) async {
+    emit(SearchProductsLoadingStates());
+    final result = await getProductsRepos.searchProducts(query);
+    result.fold(
+          (failure) => emit(SearchProductsErrorStates( errMessage:failure.errMessage)),
+          (products) => emit(SearchProductsSuccessStates(products: products)),
+    );
   }
 }

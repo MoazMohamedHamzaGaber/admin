@@ -55,6 +55,7 @@ Widget buildTextField({
   required TextEditingController controller,
   required String title,
   required TextInputType keyboardType,
+  Function? onChanged,
   String? validate,
   int? maxLength,
   int? minLines,
@@ -73,6 +74,9 @@ Widget buildTextField({
         maxLines: maxLines,
         keyboardType: keyboardType,
         inputFormatters: inputFormatters,
+        onChanged: (e){
+          onChanged!(e);
+        },
         validator: (value) {
           if (value!.isEmpty) {
             return validate;
