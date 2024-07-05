@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../../../core/utils/const.dart';
 
 class ProductsCubit extends Cubit<ProductsStates>{
   ProductsCubit(this.addProductsRepo):super(InitialProductsStates());
