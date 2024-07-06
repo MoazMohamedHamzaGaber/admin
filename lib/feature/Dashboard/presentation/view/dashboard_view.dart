@@ -1,3 +1,4 @@
+import 'package:admin/core/utils/assets.dart';
 import 'package:admin/feature/Dashboard/presentation/view/widgets/dashboard_view_body.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +10,7 @@ class DashBoardView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      appBar: BuildAppBar(image: 'assets/images/shopping_cart.png', title: 'ShopSmart'),
+      appBar: BuildAppBar(image: Assets.imagesShoppingCart, title: 'ShopSmart'),
       body: DashBoardViewBody(),
     );
   }
