@@ -55,6 +55,7 @@ Widget buildTextField({
   required TextEditingController controller,
   required String title,
   required TextInputType keyboardType,
+  Function? onChanged,
   String? validate,
   int? maxLength,
   int? minLines,
@@ -73,6 +74,9 @@ Widget buildTextField({
         maxLines: maxLines,
         keyboardType: keyboardType,
         inputFormatters: inputFormatters,
+        onChanged: (e){
+          onChanged!(e);
+        },
         validator: (value) {
           if (value!.isEmpty) {
             return validate;
@@ -149,6 +153,7 @@ Future<void> buildShowDialog({
   required String image,
   required String name,
   required Function function,
+  bool isCancel=false,
 }) =>
     showDialog(
       context: context,
@@ -172,51 +177,62 @@ Future<void> buildShowDialog({
             const SizedBox(
               height: 10,
             ),
-            TextButton(
-              onPressed: () {
-                function();
-                //Navigator.pop(context);
-              },
-              child: const Text('OK',
-              style: TextStyle(
-                color: Colors.red
+           isCancel? Padding(
+             padding: const EdgeInsets.symmetric(
+               horizontal: 16
+             ),
+             child: Row(
+                children: [
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text('Cancel',
+                      style: TextStyle(
+                        color: Colors.red
+                      ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () {
+                        function();
+                        Navigator.pop(context);
+                      },
+                      child: const Text('OK',
+                        style: TextStyle(
+                            color: Colors.red
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              ),
-            ),
+           ) :TextButton(
+             onPressed: () {
+               function();
+             },
+             child: const Text('OK',
+               style: TextStyle(
+                 color: Colors.red,
+               ),
+             ),
+           ),
+
           ],
         ),
       ),
     );
 //
 Future awesomeDialog(context,String text,DialogType dialogType)async {
-  return await AwesomeDialog(
-    context: context,
-    padding: const EdgeInsets.all(12),
-    title: 'هام',
-    dialogType: dialogType,
-    body:  Text(text),
-  ).show();
+  return await  AwesomeDialog(
+      context: context,
+      dialogType: dialogType,
+      animType: AnimType.rightSlide,
+     // title: 'Error',
+      desc: text,
+      btnOkOnPress: () {},
+    )..show();
 }
-//
-// Future buildShowLoading(context) async {
-//   return await showDialog(
-//       context: context,
-//       builder: (context) {
-//         return const AlertDialog(
-//           title: Text('Please Wait'),
-//           content: SizedBox(
-//             height: 50,
-//             child: Center(child: CircularProgressIndicator()),
-//           ),
-//         );
-//       });
-// }
-//
-// // void showToast({
-// //   required String text,
-// // }) =>
-// //     Fluttertoast.showToast(
-// //         msg: text,
-// //         toastLength: Toast.LENGTH_SHORT,
-// //         textColor: Colors.white,
-// //         fontSize: 16.0);

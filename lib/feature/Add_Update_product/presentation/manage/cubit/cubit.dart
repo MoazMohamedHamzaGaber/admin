@@ -1,7 +1,9 @@
 import 'package:admin/feature/Add_Update_product/data/repository/add_products_repo.dart';
 import 'package:admin/feature/Add_Update_product/presentation/manage/cubit/states.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+
 
 class ProductsCubit extends Cubit<ProductsStates>{
   ProductsCubit(this.addProductsRepo):super(InitialProductsStates());
@@ -10,15 +12,20 @@ class ProductsCubit extends Cubit<ProductsStates>{
 
   final AddProductsRepo addProductsRepo;
 
-  String? selectedCategoryType;
+
+  var titleController=TextEditingController();
+  var priceController=TextEditingController();
+  var quantityController=TextEditingController();
+  var descriptionController=TextEditingController();
+
 
   void changeSelectedAccount(value) {
-    selectedCategoryType = value;
+   addProductsRepo.selectedCategoryType = value;
     emit(ProductChangeSelectedCategoryStates());
   }
 
   void removeSelectedAccount() {
-    selectedCategoryType = null;
+    addProductsRepo.selectedCategoryType = null;
     emit(RemoveSelectedAccountState());
   }
 
@@ -26,7 +33,7 @@ class ProductsCubit extends Cubit<ProductsStates>{
   Future getProfileImage(ImageSource imageSource) async {
    var result=await addProductsRepo.getProfileImage(imageSource: imageSource);
    result.fold(
-         (failure) => emit(CreateProfileImageErrorState(error: failure.message)),
+         (failure) => emit(CreateProfileImageErrorState(error: failure.errMessage)),
          (_) => emit(CreateProfileImageSuccessState()),
    );
   }
@@ -35,6 +42,8 @@ class ProductsCubit extends Cubit<ProductsStates>{
     addProductsRepo.profileImageFile = null;
     emit(RemoveImageState());
   }
+
+
 
   void addProduct({
     required String productId,
@@ -56,9 +65,60 @@ class ProductsCubit extends Cubit<ProductsStates>{
       productTitle: productTitle,
       productImage: productImage, context: context,
     );
+    result.fold((failure){
+      emit(AddProductsErrorStates(error: failure.errMessage));
+      print('/////////////////////////////////////////');
+      print(failure.errMessage);
+      print('/////////////////////////////////////////');
+      //awesomeDialog(context, 'text', DialogType.error);
+    }, (books) {
+      emit(AddProductsSuccessStates());
+    });
+  }
+
+  void updateProduct({
+    required String productId,
+    String? productImage,
+    required String productPrice,
+    required String productTitle,
+    required String productDescription,
+    required String productQuantity,
+    String? productCategory,
+    required context,
+  }) async {
+    emit(UpdateProductsLoadingStates());
+
+    var result = await addProductsRepo.updateProducts(
+      productId: productId,
+      productPrice: productPrice,
+      productTitle: productTitle,
+      productDescription: productDescription,
+      productQuantity: productQuantity,
+      productCategory: productCategory,
+      productImage: productImage,
+      context: context,
+    );
+
+    result.fold((failure) {
+      emit(UpdateProductsErrorStates(errMessage: failure.errMessage));
+      print('/////////////////////////////////////////');
+      print('Failure: ${failure.errMessage}');
+      print('/////////////////////////////////////////');
+    }, (_) {
+      emit(UpdateProductsSuccessStates());
+    });
+  }
+
+  void deleteProducts(String productsId,context)async {
+    emit(DeleteProductsLoadingStates());
+
+    var result= await addProductsRepo.deleteProducts(productsId,context);
+
     result.fold(
-          (failure) => emit(AddProductsErrorStates(error: failure.message)),
-          (_) => emit(AddProductsSuccessStates()),
+          (failure)=>emit(DeleteProductsErrorStates(errMessage: failure.errMessage)),
+          (products){
+        emit(DeleteProductsSuccessStates());
+      },
     );
   }
 }

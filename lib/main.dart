@@ -1,8 +1,8 @@
 import 'package:admin/core/utils/shared_preference.dart';
 import 'package:admin/core/utils/theme_data.dart';
-import 'package:admin/feature/Add_Update_product/data/repository/add_products_repo_impl.dart';
-import 'package:admin/feature/Add_Update_product/presentation/manage/cubit/cubit.dart';
 import 'package:admin/feature/Dashboard/presentation/view/dashboard_view.dart';
+import 'package:admin/feature/all_products/data/repository/get_products_repos_impl.dart';
+import 'package:admin/feature/all_products/presentation/manage/cubit/cubit.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
     return  MultiBlocProvider(
       providers: [
         BlocProvider(create: (BuildContext context)=>DashboardCubit(isDarkTheme),),
-        BlocProvider(create: (BuildContext context)=>ProductsCubit(AddProductsRepoImpl()),),
+        BlocProvider(create: (BuildContext context)=>AllProductsCubit(GetProductsReposImpl())..getProducts(),),
       ],
       child: BlocBuilder<DashboardCubit,DashboardStates>(
         builder: (BuildContext context, state) {

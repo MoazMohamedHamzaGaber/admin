@@ -2,8 +2,6 @@ import 'package:admin/core/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-import 'image_custom.dart';
-
 Future customShowDialog(context,cubit)=>showDialog(
   context: context,
   builder: (context) => AlertDialog(
@@ -56,3 +54,30 @@ Future customShowDialog(context,cubit)=>showDialog(
     ),
   ),
 );
+
+Widget buildMaterial({
+  required IconData iconData,
+  required String text,
+  required Function function,
+}) =>
+    MaterialButton(
+      onPressed: () {
+        function();
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            iconData,
+            color: Colors.blue,
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          Text(
+            text,
+            style: AppStyles.style18.copyWith(color: Colors.blue),
+          ),
+        ],
+      ),
+    );

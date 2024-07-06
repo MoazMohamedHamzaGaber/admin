@@ -1,4 +1,5 @@
 import 'package:admin/feature/Add_Update_product/data/model/category_model.dart';
+import 'package:admin/feature/Add_Update_product/data/model/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../manage/cubit/cubit.dart';
@@ -6,8 +7,10 @@ import '../../manage/cubit/states.dart';
 
 
 class DropdownButtonSection extends StatelessWidget {
-   const DropdownButtonSection({super.key});
+   const DropdownButtonSection({super.key, required this.isUpdate, required this.model});
 
+   final bool isUpdate;
+   final ProductModel model;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +30,7 @@ class DropdownButtonSection extends StatelessWidget {
             padding: const EdgeInsets.symmetric(
               horizontal: 14,
             ),
-            hint:const Text('Select Category',),
+            hint:isUpdate? Text('${model.productCategory}'):const Text('Select Category',),
             icon: const Icon(
               Icons.keyboard_arrow_down,
             ),

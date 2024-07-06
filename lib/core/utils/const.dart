@@ -18,12 +18,7 @@ Future navigateAndFinish(context,Widget)
 {
   return Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>Widget),(route) => false,);
 }
-
-var titleController=TextEditingController();
-var priceController=TextEditingController();
-var quantityController=TextEditingController();
-var descriptionController=TextEditingController();
-
-// String uId='';
-//
-//
+ String capitalize(String text) {
+   if (text.isEmpty) return text;
+   return text[0].toUpperCase() + text.substring(1).toLowerCase();
+ }

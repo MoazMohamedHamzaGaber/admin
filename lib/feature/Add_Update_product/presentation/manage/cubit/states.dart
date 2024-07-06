@@ -1,4 +1,3 @@
-
 abstract class ProductsStates{}
 
 class InitialProductsStates extends ProductsStates{}
@@ -29,4 +28,24 @@ class AddProductsErrorStates extends ProductsStates{
   final String error;
 
   AddProductsErrorStates({required this.error});
+}
+
+class UpdateProductsSuccessStates extends ProductsStates{}
+
+class UpdateProductsLoadingStates extends ProductsStates{}
+
+class UpdateProductsErrorStates extends ProductsStates{
+  final String errMessage;
+
+  UpdateProductsErrorStates({required this.errMessage});
+}
+
+class DeleteProductsSuccessStates extends ProductsStates{}
+
+class DeleteProductsLoadingStates extends ProductsStates{}
+
+class DeleteProductsErrorStates extends ProductsStates{
+  final String errMessage;
+
+  DeleteProductsErrorStates({required this.errMessage});
 }
