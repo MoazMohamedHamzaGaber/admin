@@ -1,6 +1,3 @@
-
-import '../../../data/model/product_model.dart';
-
 abstract class ProductsStates{}
 
 class InitialProductsStates extends ProductsStates{}
