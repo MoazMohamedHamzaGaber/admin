@@ -22,7 +22,3 @@ Future navigateAndFinish(context,Widget)
    if (text.isEmpty) return text;
    return text[0].toUpperCase() + text.substring(1).toLowerCase();
  }
-
-// String uId='';
-//
-//

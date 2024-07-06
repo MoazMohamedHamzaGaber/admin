@@ -35,5 +35,5 @@ abstract class AddProductsRepo{
   Future<Either<FirebaseFailure,void>> getProfileImage({
     required ImageSource imageSource,
 });
-  Future<Either<Failure,List<ProductModel>>> deleteProducts(String productsId);
+  Future<Either<Failure,void>> deleteProducts(String productsId,context);
 }

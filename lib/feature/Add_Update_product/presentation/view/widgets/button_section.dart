@@ -36,7 +36,7 @@ class _ButtonSectionState extends State<ButtonSection> {
               name: 'Do your sure?',
               function: () {
                 widget.cubit
-                    .deleteProducts(widget.id);
+                    .deleteProducts(widget.id,context);
               },
             );
           }
@@ -97,7 +97,7 @@ class _ButtonSectionState extends State<ButtonSection> {
                     productQuantity:
                     widget.cubit.quantityController.text,
                     productCategory: widget.cubit.addProductsRepo
-                        .selectedCategoryType!,
+                        .selectedCategoryType,
                     productId: productID,
                     context: context,
                   );

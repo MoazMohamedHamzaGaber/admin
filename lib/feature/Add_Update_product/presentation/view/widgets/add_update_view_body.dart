@@ -40,17 +40,10 @@ class _AddUpdateViewBodyState extends State<AddUpdateViewBody> {
             awesomeDialog(
                 context, 'Product added successfully!', DialogType.success);
           }
-          if (state is AddProductsErrorStates) {
-            awesomeDialog(context, state.error, DialogType.error);
-          }
-
           if (state is UpdateProductsSuccessStates) {
-            navigateTo(context, const DashBoardView());
+            navigateTo(context, const AllProductsView());
             awesomeDialog(
                 context, 'Product update successfully!', DialogType.success);
-          }
-          if (state is UpdateProductsErrorStates) {
-            awesomeDialog(context, state.errMessage, DialogType.error);
           }
           if (state is DeleteProductsSuccessStates) {
             navigateTo(context, const AllProductsView());
@@ -58,12 +51,6 @@ class _AddUpdateViewBodyState extends State<AddUpdateViewBody> {
               context,
               'Product Deleted Successfully',
               DialogType.success,
-            );
-          } else if (state is DeleteProductsErrorStates) {
-            awesomeDialog(
-              context,
-              state.errMessage,
-              DialogType.error,
             );
           }
         },

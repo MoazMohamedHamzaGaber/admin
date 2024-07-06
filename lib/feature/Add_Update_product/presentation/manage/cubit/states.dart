@@ -43,11 +43,7 @@ class UpdateProductsErrorStates extends ProductsStates{
   UpdateProductsErrorStates({required this.errMessage});
 }
 
-class DeleteProductsSuccessStates extends ProductsStates{
-  final List<ProductModel> products;
-
-  DeleteProductsSuccessStates({required this.products});
-}
+class DeleteProductsSuccessStates extends ProductsStates{}
 
 class DeleteProductsLoadingStates extends ProductsStates{}
 

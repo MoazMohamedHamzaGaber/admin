@@ -1,7 +1,5 @@
-import 'package:admin/core/utils/components.dart';
 import 'package:admin/feature/Add_Update_product/data/repository/add_products_repo.dart';
 import 'package:admin/feature/Add_Update_product/presentation/manage/cubit/states.dart';
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -20,8 +18,9 @@ class ProductsCubit extends Cubit<ProductsStates>{
   var quantityController=TextEditingController();
   var descriptionController=TextEditingController();
 
+
   void changeSelectedAccount(value) {
-    addProductsRepo.selectedCategoryType = value;
+   addProductsRepo.selectedCategoryType = value;
     emit(ProductChangeSelectedCategoryStates());
   }
 
@@ -71,7 +70,7 @@ class ProductsCubit extends Cubit<ProductsStates>{
       print('/////////////////////////////////////////');
       print(failure.errMessage);
       print('/////////////////////////////////////////');
-      awesomeDialog(context, 'text', DialogType.error);
+      //awesomeDialog(context, 'text', DialogType.error);
     }, (books) {
       emit(AddProductsSuccessStates());
     });
@@ -95,31 +94,30 @@ class ProductsCubit extends Cubit<ProductsStates>{
       productTitle: productTitle,
       productDescription: productDescription,
       productQuantity: productQuantity,
-      productCategory: productCategory!,
+      productCategory: productCategory,
       productImage: productImage,
       context: context,
     );
 
     result.fold((failure) {
+      emit(UpdateProductsErrorStates(errMessage: failure.errMessage));
       print('/////////////////////////////////////////');
       print('Failure: ${failure.errMessage}');
       print('/////////////////////////////////////////');
-      emit(UpdateProductsErrorStates(errMessage: failure.errMessage));
-      awesomeDialog(context, 'Error', DialogType.error);
     }, (_) {
       emit(UpdateProductsSuccessStates());
     });
   }
 
-  void deleteProducts(String productsId)async {
+  void deleteProducts(String productsId,context)async {
     emit(DeleteProductsLoadingStates());
 
-    var result= await addProductsRepo.deleteProducts(productsId);
+    var result= await addProductsRepo.deleteProducts(productsId,context);
 
     result.fold(
           (failure)=>emit(DeleteProductsErrorStates(errMessage: failure.errMessage)),
           (products){
-        emit(DeleteProductsSuccessStates(products: products));
+        emit(DeleteProductsSuccessStates());
       },
     );
   }

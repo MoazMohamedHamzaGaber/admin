@@ -1,6 +1,4 @@
-import 'package:admin/core/utils/const.dart';
 import 'package:admin/feature/Add_Update_product/presentation/view/widgets/add_update_view_body.dart';
-import 'package:admin/feature/Dashboard/presentation/view/dashboard_view.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/utils/components.dart';
@@ -20,7 +18,7 @@ class AddUpdateView extends StatelessWidget {
           centerTitle: true,
           text:isUpdate? 'Update a Product':'Upload a new product',
           function: (){
-            navigateAndFinish(context, const DashBoardView());
+            Navigator.pop(context);
           },
         ),
         body: AddUpdateViewBody(isUpdate: isUpdate, model: model));
