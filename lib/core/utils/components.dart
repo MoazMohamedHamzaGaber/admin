@@ -153,6 +153,7 @@ Future<void> buildShowDialog({
   required String image,
   required String name,
   required Function function,
+  bool isCancel=false,
 }) =>
     showDialog(
       context: context,
@@ -176,17 +177,50 @@ Future<void> buildShowDialog({
             const SizedBox(
               height: 10,
             ),
-            TextButton(
-              onPressed: () {
-                function();
-                //Navigator.pop(context);
-              },
-              child: const Text('OK',
-              style: TextStyle(
-                color: Colors.red
+           isCancel? Padding(
+             padding: const EdgeInsets.symmetric(
+               horizontal: 16
+             ),
+             child: Row(
+                children: [
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text('Cancel',
+                      style: TextStyle(
+                        color: Colors.red
+                      ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () {
+                        function();
+                        Navigator.pop(context);
+                      },
+                      child: const Text('OK',
+                        style: TextStyle(
+                            color: Colors.red
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              ),
-            ),
+           ) :TextButton(
+             onPressed: () {
+               function();
+             },
+             child: const Text('OK',
+               style: TextStyle(
+                 color: Colors.red,
+               ),
+             ),
+           ),
+
           ],
         ),
       ),

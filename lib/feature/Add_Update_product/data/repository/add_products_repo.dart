@@ -4,6 +4,8 @@ import 'package:admin/core/error/failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../model/product_model.dart';
+
 
 abstract class AddProductsRepo{
   File? profileImageFile;
@@ -33,4 +35,5 @@ abstract class AddProductsRepo{
   Future<Either<FirebaseFailure,void>> getProfileImage({
     required ImageSource imageSource,
 });
+  Future<Either<Failure,List<ProductModel>>> deleteProducts(String productsId);
 }

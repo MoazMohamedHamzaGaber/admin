@@ -2,6 +2,8 @@ import 'package:admin/feature/all_products/presentation/view/widgets/all_product
 import 'package:flutter/material.dart';
 
 import '../../../../core/utils/components.dart';
+import '../../../../core/utils/const.dart';
+import '../../../Dashboard/presentation/view/dashboard_view.dart';
 
 class AllProductsView extends StatelessWidget {
   const AllProductsView({super.key});
@@ -11,7 +13,7 @@ class AllProductsView extends StatelessWidget {
     return Scaffold(
       appBar: appBar(context: context,text: 'Search',
           function: (){
-            Navigator.pop(context);
+            navigateAndFinish(context, const DashBoardView());
           }
       ),
       body: const AllProductsViewBody(),

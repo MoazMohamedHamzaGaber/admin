@@ -45,6 +45,7 @@ class ProductsCubit extends Cubit<ProductsStates>{
   }
 
 
+
   void addProduct({
     required String productId,
     String? productImage,
@@ -108,5 +109,18 @@ class ProductsCubit extends Cubit<ProductsStates>{
     }, (_) {
       emit(UpdateProductsSuccessStates());
     });
+  }
+
+  void deleteProducts(String productsId)async {
+    emit(DeleteProductsLoadingStates());
+
+    var result= await addProductsRepo.deleteProducts(productsId);
+
+    result.fold(
+          (failure)=>emit(DeleteProductsErrorStates(errMessage: failure.errMessage)),
+          (products){
+        emit(DeleteProductsSuccessStates(products: products));
+      },
+    );
   }
 }

@@ -35,7 +35,7 @@ class _AllProductsViewBodyState extends State<AllProductsViewBody> {
                 title: 'Search',
                 prefixIcon: Icons.search_sharp,
               ),
-              buildGridViewBasedOnState(state),
+              Expanded(child: buildGridViewBasedOnState(state)),
             ],
           ),
         );

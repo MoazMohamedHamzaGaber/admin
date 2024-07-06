@@ -112,6 +112,27 @@ class AddProductsRepoImpl implements AddProductsRepo {
     }
 
   @override
+  Future<Either<Failure, List<ProductModel>>> deleteProducts(String productsId) async {
+    try {
+      final CollectionReference productsCollection =
+      FirebaseFirestore.instance.collection('products');
+      await productsCollection.doc(productsId).delete();
+
+      var items = await productsCollection.get();
+
+      List<ProductModel> products = items.docs.map(
+            (doc) => ProductModel.fromJson(
+          doc.data(),
+        ),
+      ).toList();
+
+      return Right(products);
+    } catch (e) {
+      return Left(FirebaseFailure(e.toString()));
+    }
+  }
+
+  @override
   Future<Either<FirebaseFailure,void>> getProfileImage({required ImageSource imageSource})async {
 
     final pickedFile = await picker.pickImage(source: imageSource);
