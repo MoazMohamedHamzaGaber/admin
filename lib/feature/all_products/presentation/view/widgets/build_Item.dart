@@ -50,7 +50,7 @@ class BuildItemSearch extends StatelessWidget {
                     flex: 5,
                     child: Text(
                       model.productTitle,
-                      maxLines: 2,
+                      maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
